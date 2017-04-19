@@ -1,0 +1,110 @@
+<section class="property-binding">
+    <article>
+        <h3>Interpolação</h3>
+        <p><b>String renderizada com Interpolação:</b> <a>{{ url }}</a></p>
+        <p><b>O resultado da 2 * 4 = </b> {{ 2*4 }}</p>
+        <p><b>O Resultado da soma é = </b> {{getSoma(2,4)}}</p>
+    </article>
+
+    <article>
+        <h3>Property Binding</h3>
+        <img src="{{ urlImagem }}">
+        <p>No Property Binding, usamos o colchete na propriedade HTML e não é necessário o uso das chaves </p>
+        <img [src]="urlImagem">
+    </article>
+</section>
+
+<section class="class-style-binding">
+    <article>
+        <h3> Classes e Style Binding</h3>
+        <div>
+            Selecione uma Classe:
+            <!-- Criamos uma variável local de template chamada classe -->
+            <select #classe (change)="0">
+                <option value="alert-success">Sucesso</option>
+                <option value="alert-info">Info</option>
+                <option value="alert-warning">Alerta</option>
+                <option value="alert-danger">Erro</option>
+            </select>
+            <br>
+            <br>
+
+            <!-- Estamos fazendo o class binding, para mudar as classes das divs conforme for selecionado no select-->
+            <!-- Se o valor selecionado for alert-succes, aplicamos a classe correspondente-->
+            <div class="alert" role="alert" [class.alert-success]="classe.value == 'alert-success'">Sucesso</div>
+            <div class="alert" role="alert" [class.alert-info]="classe.value == 'alert-info'">Info</div>
+            <div class="alert" role="alert" [class.alert-warning]="classe.value == 'alert-warning'">Alerta</div>
+            <div class="alert" role="alert" [class.alert-danger]="classe.value == 'alert-danger'">Erro</div>
+
+            <!-- Se o valor do select for 'alert-danger', o style.display vai receber 'block', senão, recebe none-->
+            <div class="alert alert-danger" role="alert" [style.display]="classe.value == 'alert-danger' ? 'block' : 'none'">
+                Este Alert só aparece em caso de erro!
+            </div>
+        </div>
+    </article>
+</section>
+
+<section class="event-binding">
+    <article>
+        <h3>Event Binding</h3>
+        <div>
+            <button class="btn btn-primary" (click)="botaoClicado()">Clique Aqui</button>
+            <br>
+            <br>
+
+            <input type="text" (keyup)="mostrarTextoDigitado(campoInput.value)" (keyup.enter)="salvarTexto(campoInput.value)" #campoInput/>
+            <br>
+
+            <h3>Texto Digitado: {{ textoDigitado }}</h3>
+            <h3>Texto Salvo: {{ textoSalvo }}</h3>
+            <br>
+
+            <span (mouseover)="TiraEcolocaMouse()" (mouseout)="TiraEcolocaMouse()" [class.realcar]="mouseEmCima">
+                Passe o mouse em cima
+            </span>
+        </div>
+    </article>
+</section>
+
+<!--Component e template são atualizados ao mesmo tempos -->
+<section class="two-way-data-binding">
+    <article>
+        <h3>Two Way Data Binding</h3>
+        <div>
+
+            <!-- OBS: [] bind de propriedade, () bind de evento-->
+            <!-- $event.target.value pega o valor de um input-->
+            <input type="text" [value]="nome" (input)="nome = $event.target.value" />
+
+            <!--Ng model faz a mesma coisa que o anteriror, só que mais fácil -->
+            <input type="text" [ngModel]="nome" (ngModelChange)="nome = $event" />
+
+            <!--Two way data binding que justa as duas formas de bind numa só [()] -->
+            <input type="text" [(ngModel)]="nome" />
+
+            <p>Você Digitou: {{ nome }}</p>
+        </div>
+        <br>
+
+        <div>
+            <h4>Cadastro de Pessoa</h4>
+
+            <input type="text" [(ngModel)]="pessoa.nome" placeholder="nome" />
+            <input type="text" [(ngModel)]="pessoa.idade" placeholder="idade" />
+            <input type="text" [(ngModel)]="pessoa.endereco.rua" placeholder="rua" />
+            <input type="text" [(ngModel)]="pessoa.endereco.numero" placeholder="número" />
+
+            <p>Meu nome é {{pessoa.nome}}, tenho {{pessoa.idade}} anos, moro na rua {{pessoa.endereco.rua}} número {{pessoa.endereco.numero}}</p>
+        </div>
+    </article>
+
+</section>
+
+<section class="input-output-properties">
+    <article>
+        <h3>Input/Output Properties</h3>
+
+        <!-- estamos fazendo o uso de um atributo do componente data-binding dentro do componente input-property-->
+        <app-curso [nome]="nomeDoCurso"></app-curso>
+    </article>
+</section>
